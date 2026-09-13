@@ -252,6 +252,21 @@ textarea{min-height:80px;resize:vertical}
   letter-spacing:.14em;
   text-transform:uppercase;
 }
+
+.form-status{
+  display:none;
+  margin-top:18px;
+  padding:18px 16px;
+  text-align:center;
+  border:1px solid var(--line);
+  background:#f3ece5;
+  color:#5f5047;
+  font:400 17px/1.55 Georgia,"Times New Roman",serif;
+}
+.form-status.show{display:block}
+.form-status.success{background:#f3ece5}
+.form-status.error{background:#f7eeee}
+.btn[disabled]{opacity:.58;cursor:default}
 .footer{
   padding:44px 24px 50px;
   text-align:center;
@@ -488,8 +503,9 @@ textarea{min-height:80px;resize:vertical}
   <p style="margin-bottom:24px">Пожалуйста, сообщите, сможете ли вы быть с нами и нужен ли вам обратный билет.</p>
 
   <form action="https://formsubmit.co/Polly.lipaa@gmail.com" method="POST">
-    <input type="hidden" name="_subject" value="Свадьба Артура и Полины — новый ответ гостя">
+    <input type="hidden" name="_subject" value="Новый ответ — свадьба Артура и Полины">
     <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_next" value="https://cookingb27-cpu.github.io/artur-polina/?submitted=1">
     <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off">
 
     <div class="field">
@@ -524,7 +540,7 @@ textarea{min-height:80px;resize:vertical}
     </div>
 
     <button class="btn" type="submit">Подтвердить присутствие</button>
-    <p class="small">При первой отправке адрес Polly.lipaa@gmail.com нужно будет подтвердить в письме от сервиса формы.</p>
+    <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
   </form>
 </section>
 
@@ -534,5 +550,19 @@ textarea{min-height:80px;resize:vertical}
 </div>
 
 </main>
+
+<script>
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('submitted') !== '1') return;
+  const status = document.getElementById('form-status');
+  if (!status) return;
+  status.textContent = 'Спасибо! Ваш ответ отправлен ♡';
+  status.className = 'form-status success show';
+  setTimeout(function(){
+    status.scrollIntoView({behavior:'smooth', block:'center'});
+  }, 150);
+})();
+</script>
 </body>
 </html>
